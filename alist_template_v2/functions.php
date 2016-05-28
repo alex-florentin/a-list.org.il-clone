@@ -68,19 +68,13 @@ function order_profiles_page(){
 	?>
 
 		<?php
-
 		$mysqli=new mysqli('localhost', 'agenda_alist2', '#AcBV8,D(0o5TZ3&QZ', 'agenda_alist2');
-
-
 		if(mysqli_connect_error()){
 			echo "Connexion failed!", mysqli_connect_error();
 		}
-
 		$query="Select * FROM wp_people_table";
 		$resultado=$mysqli->query($query);
 		?>
-
-
 
 		<h2>Order profiles</h2>
 
@@ -104,6 +98,7 @@ function order_profiles_page(){
 				</tr>
 			</thead>
 			<tbody id="the-list">
+
 		<?php while($row=$resultado->fetch_assoc()){ ?>
 				<form action="/wp-admin/admin.php?page=order-profiles-page.php" method="POST">
 					<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
@@ -150,9 +145,9 @@ function order_profiles_page(){
 			}
 		?>
 
-	<?php
 } // order profiles page
 
+<?php
 
 function truncate($text, $chars = 270) {
     $text = $text." ";
@@ -161,8 +156,6 @@ function truncate($text, $chars = 270) {
     $text = $text."...";
     return $text;
 }
-
-
 
 
 ?>
