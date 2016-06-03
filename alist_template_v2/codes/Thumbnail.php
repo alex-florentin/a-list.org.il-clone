@@ -77,32 +77,39 @@ class Thumbnail {
             break;
         }
     }
+
     function destruct() {
         if(is_resource($this->newImage)) @ImageDestroy($this->newImage);
         if(is_resource($this->oldImage)) @ImageDestroy($this->oldImage);
         if(is_resource($this->workingImage)) @ImageDestroy($this->workingImage);
     }
+
     function getCurrentWidth() {
         return $this->currentDimensions['width'];
     }
+
     function getCurrentHeight() {
         return $this->currentDimensions['height'];
     }
+    
     function calcWidth($width,$height) {
         $newWp = (100 * $this->maxWidth) / $width;
         $newHeight = ($height * $newWp) / 100;
         return array('newWidth'=>intval($this->maxWidth),'newHeight'=>intval($newHeight));
     }
+
     function calcHeight($width,$height) {
         $newHp = (100 * $this->maxHeight) / $height;
         $newWidth = ($width * $newHp) / 100;
         return array('newWidth'=>intval($newWidth),'newHeight'=>intval($this->maxHeight));
     }
+
     function calcPercent($width,$height) {
         $newWidth = ($width * $this->percent) / 100;
         $newHeight = ($height * $this->percent) / 100;
         return array('newWidth'=>intval($newWidth),'newHeight'=>intval($newHeight));
     }
+
     function calcImageSize($width,$height) {
         $newSize = array('newWidth'=>$width,'newHeight'=>$height);
         if($this->maxWidth > 0) {
@@ -111,6 +118,7 @@ class Thumbnail {
                $newSize = $this->calcHeight($newSize['newWidth'],$newSize['newHeight']);
            }
         }
+
         if($this->maxHeight > 0) {
             $newSize = $this->calcHeight($width,$height);
             if($this->maxWidth > 0 && $newSize['newWidth'] > $this->maxWidth) {
@@ -119,11 +127,13 @@ class Thumbnail {
         }
         $this->newDimensions = $newSize;
     }
+    
     function calcImageSizePercent($width,$height) {
         if($this->percent > 0) {
             $this->newDimensions = $this->calcPercent($width,$height);
         }
     }
+
     function showErrorImage() {
         header('Content-type: image/png');
         $errImg = ImageCreate(220,25);
@@ -135,6 +145,7 @@ class Thumbnail {
         imagepng($errImg);
         imagedestroy($errImg);
     }
+
     function resize($maxWidth = 0, $maxHeight = 0) {
         $this->maxWidth = $maxWidth;
         $this->maxHeight = $maxHeight;
@@ -151,6 +162,7 @@ class Thumbnail {
 		$this->currentDimensions['width'] = $this->newDimensions['newWidth'];
 		$this->currentDimensions['height'] = $this->newDimensions['newHeight'];
 	}
+
 	function resizePercent($percent = 0) {
 	    $this->percent = $percent;
 	    $this->calcImageSizePercent($this->currentDimensions['width'],$this->currentDimensions['height']);
@@ -166,6 +178,7 @@ class Thumbnail {
 		$this->currentDimensions['width'] = $this->newDimensions['newWidth'];
 		$this->currentDimensions['height'] = $this->newDimensions['newHeight'];
 	}
+
 	function cropFromCenter($cropSize) {
 	    if($cropSize > $this->currentDimensions['width']) $cropSize = $this->currentDimensions['width'];
 	    if($cropSize > $this->currentDimensions['height']) $cropSize = $this->currentDimensions['height'];
@@ -183,6 +196,7 @@ class Thumbnail {
 		$this->currentDimensions['width'] = $cropSize;
 		$this->currentDimensions['height'] = $cropSize;
 	}
+
 	function crop($startX,$startY,$width,$height) {
 	    //make sure the cropped area is not greater than the size of the image
 	    if($width > $this->currentDimensions['width']) $width = $this->currentDimensions['width'];
@@ -204,6 +218,7 @@ class Thumbnail {
 		$this->currentDimensions['width'] = $width;
 		$this->currentDimensions['height'] = $height;
 	}
+
 	function show($quality=100,$name = '') {
 	    switch($this->format) {
 	        case 'GIF':
@@ -235,9 +250,12 @@ class Thumbnail {
 	            break;
 	    }
 	}
+
 	function save($name,$quality=100) {
 	    $this->show($quality,$name);
 	}
+
+
 	function createReflection($percent,$reflection,$white,$border = true,$borderColor = '#a4a4a4') {
         $width = $this->currentDimensions['width'];
         $height = $this->currentDimensions['height'];
@@ -269,6 +287,8 @@ class Thumbnail {
 		$this->currentDimensions['width'] = $width;
 		$this->currentDimensions['height'] = $newHeight;
 	}
+
+
 	function imageFlipVertical() {
 	    $x_i = imagesx($this->workingImage);
 	    $y_i = imagesy($this->workingImage);
@@ -278,6 +298,8 @@ class Thumbnail {
 	        }
 	    }
 	}
+
+
 	function hex2rgb($hex, $asString = false) {
         // strip off any leading #
         if (0 === strpos($hex, '#')) {
@@ -294,6 +316,7 @@ class Thumbnail {
         $rgb[2] = (isset($rgb[2]) ? hexdec($rgb[2]) : 0);
         return ($asString ? "{$rgb[0]} {$rgb[1]} {$rgb[2]}" : $rgb);
     }
+
     function gatherImageMeta() {
     	//only attempt to retrieve info if exif exists
     	if(function_exists("exif_read_data") && $this->format == 'JPG') {
@@ -331,6 +354,7 @@ class Thumbnail {
 			}
     	}
     }
+
     function rotateImage($direction = 'CW') {
     	if($direction == 'CW') {
     		$this->workingImage = imagerotate($this->workingImage,-360,0);

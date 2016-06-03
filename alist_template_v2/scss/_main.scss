@@ -89,7 +89,7 @@ z-index: 997;
   } //slider
 } //@media992.master-slider-parent
 
-.profiles {
+.profiles, .searched-profiles {
   .image-wrapper {
   display: inline-block;
   margin-bottom: 20px;
@@ -169,69 +169,120 @@ z-index: 997;
     font-size: 15px;
     }
   } //image-wrapper
-  @media screen and (max-width: 768px) {
-     .image-wrapper {
-      display: block;
-        .mask {
-         display: none;
+} //profiles
+@media screen and (max-width: 768px) {
+   .searched-profiles {
+      .image-wrapper {
+       display: block;
+         .mask {
+          display: none;
+         }
+         img {
+         border-radius: 0;
+         display: inline-block;
+         width: 40%;
+         }
+         .name-and-title {
+          position: static;
+          margin-bottom: 20px;
+          display: inline-block;
+          float: right;
+          width: 57%;
+          &:hover > .name {
+          font-size: 16px;
+          }
+          &:hover > .title {
+          font-size: 13px;
+          }
+            .name {
+            opacity: 1;
+            position: static;
+            font-size: 16px;
+            color: #111;
+            text-align: left;
+                &:hover {
+                font-size: 16px;
+                }
+             } //name
+             .title {
+             opacity: 1;
+             font-size: 13px;
+             position: static;
+             text-align: left;
+             color: #444;
+             display: block;
+                &:hover {
+                font-size: 13px;
+                }
+             } //title
+            .bio {
+             display: inline-block;
+             font-size: 13px;
+             text-align: left;
+             color: #666;
+             }
+         } //name-and-title
+
+         &:hover > .mask {
+          opacity: 0;
+         }
+      } //image-wrapper
+      .margin-xs-a {
+      margin-top: 200px;
+      }
+   } //searched-profiles
+   .profiles {
+      .image-wrapper {
+        .mask:hover {
+        opacity: 0;
         }
         img {
         border-radius: 0;
-        display: inline-block;
-        width: 40%;
         }
         .name-and-title {
          position: static;
+         width: 100%;
          margin-bottom: 20px;
-         display: inline-block;
-         float: right;
-         width: 57%;
-         &:hover > .name {
-         font-size: 16px;
-         }
-         &:hover > .title {
-         font-size: 13px;
-         }
            .name {
            opacity: 1;
+           font-size: 20px;
            position: static;
+           background-color: #fff;
+           border: 1px solid;
+           border-top-color: transparent;
+           border-bottom-color: transparent;
+           border-right-color: #ccc - 10;
+           border-left-color: #ccc;
+           color: #333;
+           padding-top: 5px;
+           }
+           .title {
+           min-width: 100%;
+           opacity: 1;
            font-size: 16px;
-           color: #111;
-           text-align: left;
+           position: static;
+           background-color: #fff;
+           border: 1px solid;
+           border-top-color: transparent;
+           border-bottom-color: #ccc;
+           border-right-color: #ccc - 10;
+           border-left-color: #ccc + 10;
+           margin-top: -2px;
+           padding-bottom: 5px;
                &:hover {
                font-size: 16px;
                }
-            } //name
-            .title {
-            opacity: 1;
-            font-size: 13px;
-            position: static;
-            text-align: left;
-            color: #444;
-            display: block;
-               &:hover {
-               font-size: 13px;
-               }
-            } //title
-           .bio {
-            display: inline-block;
-            font-size: 13px;
-            text-align: left;
-            color: #666;
-            }
+           }
         } //name-and-title
 
         &:hover > .mask {
          opacity: 0;
         }
-     }
-     .margin-xs-a {
-     margin-top: 200px;
-     }
-  } // media 768
-} //profiles
-
+     } //image-wrapper
+   } //profiles
+} // media 768
 #pagination_num {
+direction: rtl;
 text-align: center;
 margin-top: 50px;
 margin-bottom: 40px;
