@@ -5,5 +5,5 @@
     "password": "h95kFlOK6VqgGO3dsV5Xc7zzHygOMD",
     "port": 21,
     "remotePath": "/public_html/project/alist/wp-content/themes/alist_template_v2",
-    "uploadOnSave": false
+    "uploadOnSave": true
 }
