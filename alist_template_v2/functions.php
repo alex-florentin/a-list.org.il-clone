@@ -56,8 +56,8 @@ function my_admin_menu() {
 
 function manage_users_page(){
 	$output = '';
-	mysql_connect("localhost", "alexflor_alist", "U9B_CxijWz:/X{zdJg") or die ("Could not connect with dB!");
-	mysql_select_db("alexflor_alist") or die ("Could not find dB!");
+	$connection = mysql_connect("localhost", "alexflor_alist", "U9B_CxijWz:/X{zdJg") or die ("Could not connect with dB!");
+	$db_select = mysql_select_db("alexflor_alist") or die ("Could not find dB!");
 	if (isset($_POST['search'])) {
 		$search_query = $_POST['search'];
 		$query = mysql_query("SELECT * FROM wp_people_table WHERE name LIKE '%$search_query%' OR last_name LIKE '%$search_query%' OR email LIKE '%$search_query%'");
@@ -71,17 +71,17 @@ function manage_users_page(){
 				$name = $row['name'];
 				$last_name = $row['last_name'];
 				$what = strip_tags($row->what_drives_me);
-				$public = $row['public_profile'];
+				$public_profile = $row['public_profile'];
 
 
 
-				if($public == "Y") {
+				if($public_profile == "Y") {
 					$checked = "checked";
 				} else {
 					$checked = "";
 				}
 
-				$output = "
+				$output .= "
 				<form action='' method='POST'>
 					<input type='hidden' name='id' value='$id'>
 					<input type='checkbox' name='public' value='Y' $checked><span>Public?</span>
@@ -104,15 +104,14 @@ function manage_users_page(){
 	<h2>Manage users</h2>
 
 	<form method="post">
-		<input type="text" name="search" placeholder="email, name & last_name" size="30">
+		<input type="text" name="search" size="30">
 		<input type="submit" value="Go!">
 	</form>
 
-	<?php print ("$output"); ?>
 
 	<?php
 
-} // order profiles page function
+} // manage_users_page
 
 function truncate($text, $chars = 270) {
     $text = $text." ";
