@@ -171,66 +171,72 @@ z-index: 997;
   } //image-wrapper
 } //profiles
 @media screen and (max-width: 768px) {
-   .searched-profiles {
-      .image-wrapper {
-       display: block;
-         .mask {
-          display: none;
-         }
-         img {
-         border-radius: 0;
-         display: inline-block;
-         width: 40%;
-         }
-         .name-and-title {
-          position: static;
-          margin-bottom: 20px;
-          display: inline-block;
-          float: right;
-          width: 57%;
-          &:hover > .name {
-          font-size: 16px;
-          }
-          &:hover > .title {
-          font-size: 13px;
-          }
-            .name {
-            opacity: 1;
-            position: static;
-            font-size: 16px;
-            color: #111;
-            text-align: left;
-                &:hover {
+   .profiles {
+      #content {
+         .fb-format {
+            .image-wrapper {
+             display: block;
+               .mask {
+                display: none;
+               }
+               img {
+               border-radius: 0;
+               display: inline-block;
+               width: 40%;
+               }
+               .name-and-title {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-block;
+                float: right;
+                width: 57%;
+                &:hover > .name {
                 font-size: 16px;
                 }
-             } //name
-             .title {
-             opacity: 1;
-             font-size: 13px;
-             position: static;
-             text-align: left;
-             color: #444;
-             display: block;
-                &:hover {
+                &:hover > .title {
                 font-size: 13px;
                 }
-             } //title
-            .bio {
-             display: inline-block;
-             font-size: 13px;
-             text-align: left;
-             color: #666;
-             }
-         } //name-and-title
-
-         &:hover > .mask {
-          opacity: 0;
-         }
-      } //image-wrapper
-      .margin-xs-a {
-      margin-top: 200px;
-      }
-   } //searched-profiles
+                  .name {
+                  opacity: 1;
+                  position: static;
+                  font-size: 16px;
+                  color: #111;
+                  text-align: left;
+                  background: 0;
+                  border: 0;
+                  padding-top: 0 !important;
+                      &:hover {
+                      font-size: 16px;
+                      }
+                   } //name
+                   .title {
+                   opacity: 1;
+                   font-size: 13px;
+                   position: static;
+                   text-align: left;
+                   color: #444;
+                   display: block;
+                   background: 0;
+                   border: 0;
+                      &:hover {
+                      font-size: 13px;
+                      }
+                   } //title
+                  .bio {
+                   display: inline-block;
+                   font-size: 13px;
+                   text-align: left;
+                   color: #666;
+                   }
+               } //name-and-title
+               &:hover > .mask {
+                opacity: 0;
+               }
+            } //image-wrapper
+         } //fb-format
+      } //content
+   } //profiles
+   
    .profiles {
       .image-wrapper {
         .mask:hover {

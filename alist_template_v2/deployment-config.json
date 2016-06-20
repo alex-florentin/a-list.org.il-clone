@@ -1,9 +1,9 @@
 {
     "type": "ftp",
-    "host": "alexflorentin.com",
-    "username": "alexfloren",
-    "password": "h95kFlOK6VqgGO3dsV5Xc7zzHygOMD",
+    "host": "amci.org.il",
+    "username": "alon@amci.org.il",
+    "password": "norman1234",
     "port": 21,
-    "remotePath": "/public_html/project/alist/wp-content/themes/alist_template_v2",
+    "remotePath": "/a-list.org.il/wp-content/themes/alist_template_v2",
     "uploadOnSave": true
 }
