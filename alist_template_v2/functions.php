@@ -56,13 +56,14 @@ function my_admin_menu() {
 }
 
 function manage_users_page(){
-	wp_enqueue_style( 'custom', get_template_directory_uri() . '/css/style.css', false,'1.1','all');
+	wp_enqueue_style( 'custom', get_template_directory_uri() . '/css/style.css');
 	//js and css files added
 	?>
 	<div class="title-n-form">
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+		<script src="<?php echo get_template_directory_uri(); ?>/js/bootstrap.js"></script>
 		<h2>Manage users</h2>
 		<form class="back-search-box" method="post">
 			<input class="field" type="text" name="search_query" size="30" placeholder="email, first name & last name">
@@ -72,7 +73,7 @@ function manage_users_page(){
 	<?php echo $output; ?>
 	<?php
 
-	$conn = new mysqli ('localhost', 'agenda_alist2', '#AcBV8,D(0o5TZ3&QZ', 'agenda_alist2') or die ("Connexion problem!");
+	$conn = new mysqli ('localhost', 'alexflor_alist', 'U9B_CxijWz:/X{zdJg', 'alexflor_alist') or die ("Connexion problem!");
 	$conn->set_charset("utf8");
 	$update_query = "SELECT * FROM wp_people_table";
 	if(isset($_POST['search_button']) && ($_POST['search_query'] !== '')) {
@@ -107,201 +108,151 @@ function manage_users_page(){
 				$linkedin = stripslashes($row['linkdn_link']);
 				?>
 
-				<form class='search-result' method='POST' action='/wp-admin/admin.php?page=manage-users-page.php'>
+				<form class='search-result' method='POST' action='admin.php?page=manage-users-page.php'>
 				<input type='hidden' name='id' value='<?php echo $id ?>'>
-					<div class='block'>
-						<div class='left_side'>
-							<div class='avatar'><img src='<?php echo get_template_directory_uri(); ?>/uploads/profile/size/<?php echo $avatar ?>'></div>
-							<div class="public_profile">
-								<?php
+					<div class="single-result">
+						<div class="result-bar">
+							<span class="name"><?php echo $prefix." ".$first_name." ".$last_name ?></span>
+							<span class="email"><?php echo $email ?></span>
+							<span class="order-number"><?php echo $order_number ?> <i class="fa fa-th" aria-hidden="true"></i></span>
+							<span class="public"><?php
 								if ($public_profile == "Y") {
-									?>
-										<input type='hidden' name='public_profile' value='N'>
-										<input type='checkbox' name='public_profile' value='Y' checked data-toggle="toggle" data-width="100"><span>Public</span>
-									<?php
+									?> <i class="fa fa-power-off green" aria-hidden="true"></i> <?php
 								} else {
-									?>
-										<input type='checkbox' name='public_profile' value='Y' data-toggle="toggle" data-width="100"><span>ּPublic</span>
-									<?php
+									?> <i class="fa fa-power-off red" aria-hidden="true"></i> <?php
 								}
-								?>
-							</div>
-							<div class='featured_user'>
-								<?php
-								if ($featured_user == "Y") {
-									?>
-										<input type='hidden' name='featured_user' value='N'>
-										<input type='checkbox' name='featured_user' value='Y' checked data-toggle="toggle" data-width="100"><span>Featured</span>
-									<?php
-								} else {
-									?>
-										<input type='checkbox' name='featured_user' value='Y' data-toggle="toggle" data-width="100"><span>Featured</span>
-									<?php
-								}
-								?>
-							</div>
-							<div class='order_number'><input type='text' name='order_number' value='<?php echo $order_number ?>' size='2'/><span>Order</span></div>
-							<input type='submit' name='update_button' value='Update' class='update-data'>
-						</div> <!--left_side-->
-
-						<div class='right_side'>
-							<!-- break -->
-							<div id='edit_prefix'>
-								<b href='#' id='edit_prefix'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Prefix: </span>
-								<p>
-									<input type="hidden" name="prefix" value="<?php echo $str = str_replace('"','\'\'',$prefix); ?>">
-									<p class="fade_prefix edit_prefix"><?php echo $str = str_replace('"','\'\'',$prefix); ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_name'>
-								<b href='#' id='edit_name'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>First name: </span>
-								<p>
-									<input type="hidden" name="name" value="<?php echo $str = str_replace('"','\'\'',$first_name); ?>">
-									<p class="fade_name edit_name"><?php echo $str = str_replace('"','\'\'',$first_name); ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_last_name'>
-								<b href='#' id='edit_last_name'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Last name: </span>
-								<p>
-									<input type="hidden" name="last_name" value="<?php echo $str = str_replace('"','\'\'',$last_name); ?>">
-									<p class="fade_last_name edit_last_name"><?php echo $str = str_replace('"','\'\'',$last_name); ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_position'>
-								<b href='#' id='edit_position'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Position: </span>
-								<p>
-									<input type="hidden" name="position" value="<?php echo $str = str_replace('"','\'\'',$position); ?>">
-									<p class="fade_position edit_position"><?php echo $position ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_bio'>
-								<b href='#' id='edit_bio'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Bio: </span>
-								<p>
-									<input type="hidden" name="bio" value="<?php echo $str = str_replace('"','\'\'',$bio); ?>">
-									<p class="fade_bio edit_bio"><?php echo $bio ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_expertise'>
-								<b href='#' id='edit_expertise'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>More in expertise: </span>
-								<p>
-									<input type="hidden" name="more_expertise" value="<?php echo $str = str_replace('"','\'\'',$more_expertise); ?>">
-									<p class="fade_expertise edit_expertise"><?php echo $more_expertise ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_drives'>
-								<b href='#' id='edit_drives'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>What drives me: </span>
-								<p>
-									<input type="hidden" name="what_drives_me" value="<?php echo $str = str_replace('"','\'\'',$what_drives_me); ?>">
-									<p class="fade_drives edit_drives"><?php echo $what_drives_me ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_city'>
-								<b href='#' id='edit_city'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>City: </span>
-								<p>
-									<input type="hidden" name="city" value="<?php echo $str = str_replace('"','\'\'',$city); ?>">
-									<p class="fade_city edit_city"><?php echo $str = str_replace('"','\'\'',$city); ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_area'>
-								<b href='#' id='edit_area'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Area: </span>
-								<p>
-									<input type="hidden" name="area" value="<?php echo $str = str_replace('"','\'\'',$area); ?>">
-									<p class="fade_area edit_area"><?php echo $str = str_replace('"','\'\'',$area); ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_email' class="edit_email">
-								<b id='edit_email'>
-									<i class="fa fa-lock" aria-hidden="true"></i>
-								</b>
-								<span>Email: </span>
-								<p>
-									<input type="hidden" name="email" class="edit_email" value="<?php echo $email ?>">
-									<p class="fade_email"><?php echo $email ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_phone'>
-								<b href='#' id='edit_phone'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Phone: </span>
-								<p>
-									<input type="hidden" name="phone" value="<?php echo $phone ?>">
-									<p class="fade_phone edit_phone"><?php echo $phone ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_facebook'>
-								<b href='#' id='edit_facebook'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Facebook: </span>
-								<p>
-									<input type="hidden" name="facebook" value="<?php echo $facebook ?>">
-									<p class="fade_facebook edit_facebook"><?php echo $facebook ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_twitter'>
-								<b href='#' id='edit_twitter'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Twitter: </span>
-								<p>
-									<input type="hidden" name="twitter" value="<?php echo $twitter ?>">
-									<p class="fade_twitter edit_twitter"><?php echo $twitter ?></p>
-								</p>
-							</div>
-							<!-- break -->
-							<div id='edit_linkedin'>
-								<b href='#' id='edit_linkedin'>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</b>
-								<span>Linkedin: </span>
-								<p>
-									<input type="hidden" name="linkedin" value="<?php echo $linkedin ?>">
-									<p class="fade_linkedin edit_linkedin"><?php echo $linkedin ?></p>
-								</p>
-							</div>
-							<!-- break -->
-						</div> <!--right_side-->
-					</div> <!--block-->
+							?></span>
+							<button type="button" class="more-button" data-toggle="modal" data-target=".bs-example-modal-lg<?php echo $id ?>"><i class="fa fa-eye" aria-hidden="true"></i></button>
+						</div>
+						<!-- modal -->
+						<div class="modal fade bs-example-modal-lg<?php echo $id ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+						  <div class="modal-dialog modal-lg">
+						    <div class="modal-content">
+									<div class="row">
+										<div class='left_side col-md-3 col-lg-3 col-sm-4 col-xs-12 pull-right'>
+		 									<div class='avatar'><img src='<?php echo get_template_directory_uri(); ?>/uploads/profile/size/<?php echo $avatar ?>'></div>
+		 									<div class="public_profile">
+		 										<?php
+		 										if ($public_profile == "Y") {
+		 											?>
+		 												<input type='hidden' name='public_profile' value='N'>
+		 												<input type='checkbox' name='public_profile' value='Y' checked data-toggle="toggle" data-width="100"><span>Public</span>
+		 											<?php
+		 										} else {
+		 											?>
+		 												<input type='checkbox' name='public_profile' value='Y' data-toggle="toggle" data-width="100"><span>ּPublic</span>
+		 											<?php
+		 										}
+		 										?>
+		 									</div>
+		 									<div class='featured_user'>
+		 										<?php
+		 										if ($featured_user == "Y") {
+		 											?>
+		 												<input type='hidden' name='featured_user' value='N'>
+		 												<input type='checkbox' name='featured_user' value='Y' checked data-toggle="toggle" data-width="100"><span>Featured</span>
+		 											<?php
+		 										} else {
+		 											?>
+		 												<input type='checkbox' name='featured_user' value='Y' data-toggle="toggle" data-width="100"><span>Featured</span>
+		 											<?php
+		 										}
+		 										?>
+		 									</div>
+		 									<div class='order_number'><input type='text' name='order_number' value='<?php echo $order_number ?>' size='2'/><span>Order</span></div>
+		 									<input type='submit' name='update_button' value='Update' class='update-data'>
+		 								</div> <!--left_side-->
+										<div class='right_side col-md-9 col-lg-9 col-sm-8 col-xs-12'>
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="prefix">Prefix: </label>
+												<input type="text" name="prefix" value="<?php echo $str = str_replace('"','\'\'',$prefix); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="name">First name: </label>
+												<input type="text" name="name" value="<?php echo $str = str_replace('"','\'\'',$first_name); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="last_name">Last name: </label>
+												<input type="text" name="last_name" value="<?php echo $str = str_replace('"','\'\'',$last_name); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="position">Position: </label>
+												<input type="text" name="position" value="<?php echo $str = str_replace('"','\'\'',$position); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="bio">Bio: </label>
+												<textarea name="bio" disabled <?php if ($bio == " ") { echo "style='height:0;'"; } ?> ><?php echo $str = str_replace('"','\'\'',$bio); ?></textarea>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="more_expertise">More in expertise: </label>
+												<textarea name="more_expertise" disabled <?php if ($more_expertise == " ") { echo "style='height:0;'"; } ?> ><?php echo $str = str_replace('"','\'\'',$more_expertise); ?></textarea>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="what_drives_me">What drives me: </label>
+												<textarea name="what_drives_me" disabled <?php if ($what_drives_me == " ") { echo "style='height:0;'"; } ?> ><?php echo $str = str_replace('"','\'\'',$what_drives_me); ?></textarea>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="city">City: </label>
+												<input type="text" name="city" value="<?php echo $str = str_replace('"','\'\'',$city); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="area">Area: </label>
+												<input type="text" name="area" value="<?php echo $str = str_replace('"','\'\'',$area); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent-locked">
+												<button type="button" class="edit-button" style="color: #c0392b; padding:5px 10px;"><i class="fa fa-lock" aria-hidden="true"></i></button>
+												<label for="email">Email: </label>
+												<input type="text" name="email" value="<?php echo $str = str_replace('"','\'\'',$email); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="phone">Phone: </label>
+												<input type="text" name="phone" value="<?php echo $str = str_replace('"','\'\'',$phone); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="facebook">Facebook: </label>
+												<input type="text" name="facebook" value="<?php echo $str = str_replace('"','\'\'',$facebook); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="twitter">Twitter: </label>
+												<input type="text" name="twitter" value="<?php echo $str = str_replace('"','\'\'',$twitter); ?>" disabled>
+											</p>
+											<!--BR-->
+											<p class="parent">
+												<button type="button" class="edit-button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+												<label for="linkedin">Linkedin: </label>
+												<input type="text" name="linkedin" value="<?php echo $str = str_replace('"','\'\'',$linkedin); ?>" disabled>
+											</p>
+										</div> <!--right_side-->
+									</div>
+						    </div>
+						  </div>
+					   </div>
+						<!-- /modal -->
+				  </div> <!-- user -->
 				</form>
 
 				<?php
@@ -356,159 +307,18 @@ function manage_users_page(){
 
 ?>
 
-<script>
-      function edit_prefix(id) {
-      $('#' + id + ' .edit_prefix').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="prefix"/>'));
-      });};
-      $('#edit_prefix').click(function(){
-		edit_prefix('edit_prefix');
-      });
-      ///////////////////////////////////////////////////////////////////////////////
-		function edit_name(id) {
-      $('#' + id + ' .edit_name').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" style="margin-right:5px" name="name"/>'));
-      });};
-      $('#edit_name').click(function(){
-		edit_name('edit_name');
-      });
-      ///////////////////////////////////////////////////////////////////////////////
-		function edit_last_name(id) {
-      $('#' + id + ' .edit_last_name').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" style="margin-right:5px" name="last_name"/>'));
-      });};
-      $('#edit_last_name').click(function(){
-		edit_last_name('edit_last_name');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_position(id) {
-      $('#' + id + ' .edit_position').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" style="margin-right:5px" name="position"/>'));
-      });};
-      $('#edit_position').click(function(){
-		edit_position('edit_position');
-      });
-      ///////////////////////////////////////////////////////////////////////////////
-      function edit_bio(id) {
-      $('#' + id + ' .edit_bio').each(function(index) {
-      $(this).replaceWith($('<textarea style="width:100%;margin-top:5px;" name="bio" cols="100" rows="5">' + $(this).html() + '</textarea>'));
-      });};
-
-      $('#edit_bio').click(function(){
-		edit_bio('edit_bio');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_expertise(id) {
-      $('#' + id + ' .edit_expertise').each(function(index) {
-      $(this).replaceWith($('<textarea style="width:100%;margin-top:5px;" name="more_expertise" cols="100" rows="5">' + $(this).html() + '</textarea>'));
-      });};
-
-      $('#edit_expertise').click(function(){
-		edit_expertise('edit_expertise');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_drives(id) {
-      $('#' + id + ' .edit_drives').each(function(index) {
-      $(this).replaceWith($('<textarea style="width:100%;margin-top:5px;" name="what_drives_me" cols="100" rows="5">' + $(this).html() + '</textarea>'));
-      });};
-
-      $('#edit_drives').click(function(){
-		edit_drives('edit_drives');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_city(id) {
-      $('#' + id + ' .edit_city').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="city"/>'));
-      });};
-      $('#edit_city').click(function(){
-		edit_city('edit_city');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_area(id) {
-      $('#' + id + ' .edit_area').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="area"/>'));
-      });};
-      $('#edit_area').click(function(){
-		edit_area('edit_area');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_phone(id) {
-      $('#' + id + ' .edit_phone').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="phone"/>'));
-      });};
-      $('#edit_phone').click(function(){
-		edit_phone('edit_phone');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_facebook(id) {
-      $('#' + id + ' .edit_facebook').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="facebook"/>'));
-      });};
-      $('#edit_facebook').click(function(){
-		edit_facebook('edit_facebook');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_twitter(id) {
-      $('#' + id + ' .edit_twitter').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="twitter"/>'));
-      });};
-      $('#edit_twitter').click(function(){
-		edit_twitter('edit_twitter');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-		function edit_linkedin(id) {
-      $('#' + id + ' .edit_linkedin').each(function(index) {
-      $(this).replaceWith($('<input value="' + $(this).html() + '" type="text" name="linkedin"/>'));
-      });};
-      $('#edit_linkedin').click(function(){
-		edit_linkedin('edit_linkedin');
-      });
-		///////////////////////////////////////////////////////////////////////////////
-
-		$(".edit_prefix").click(function(){
-			$(".fade_prefix").fadeOut(0);
-		});
-		$(".edit_name").click(function(){
-			$(".fade_name").fadeOut(0);
-		});
-		$(".edit_last_name").click(function(){
-			$(".fade_last_name").fadeOut(0);
-		});
-		$(".edit_position").click(function(){
-			$(".fade_position").fadeOut(0);
-		});
-		$(".edit_bio").click(function(){
-			$(".fade_bio").fadeOut(0);
-		});
-		$(".edit_expertise").click(function(){
-			$(".fade_expertise").fadeOut(0);
-		});
-		$(".edit_drives").click(function(){
-			$(".fade_drives").fadeOut(0);
-		});
-		$(".edit_language").click(function(){
-			$(".fade_language").fadeOut(0);
-		});
-		$(".edit_city").click(function(){
-			$(".fade_city").fadeOut(0);
-		});
-		$(".edit_area").click(function(){
-			$(".fade_area").fadeOut(0);
-		});
-		$(".edit_phone").click(function(){
-			$(".fade_phone").fadeOut(0);
-		});
-		$(".edit_facebook").click(function(){
-			$(".fade_facebook").fadeOut(0);
-		});
-		$(".edit_twitter").click(function(){
-			$(".fade_twitter").fadeOut(0);
-		});
-		$(".edit_linkedin").click(function(){
-			$(".fade_linkedin").fadeOut(0);
+	<script>
+		$('.parent').click(function(){
+		 $('input, textarea', this).attr('disabled', false);
+		 $('textarea', this).css('height', '100');
 		});
 
-  </script>
+		$('.update-data').click(function(){
+			$('input, textarea').attr('disabled', false);
+		});
+
+
+	</script>
 
 <?php
 
@@ -519,7 +329,7 @@ function order_profiles_page(){
 
 		<?php
 
-		$mysqli=new mysqli('localhost', 'agenda_alist2', '#AcBV8,D(0o5TZ3&QZ', 'agenda_alist2');
+		$mysqli=new mysqli('localhost', 'alexflor_alist', 'U9B_CxijWz:/X{zdJg', 'alexflor_alist');
 
 
 		if(mysqli_connect_error()){
